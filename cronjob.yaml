@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-quickstart
+spec:
+  schedule: "* * * * *" # Se ejecuta cada minuto
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cronjob-quickstart-container
+              image: cronjob-quickstart:latest # Nombre de tu imagen Docker
+              imagePullPolicy: IfNotPresent    # Usa la imagen local si está disponible
+              command: ["java"]               # Ejecuta el comando java
+              args: ["-jar", "/deployments/quarkus-run.jar"] # Ruta al archivo JAR
+          restartPolicy: OnFailure             # Reinicia el contenedor solo si falla
